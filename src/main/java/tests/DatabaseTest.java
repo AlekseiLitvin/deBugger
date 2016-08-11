@@ -1,4 +1,4 @@
-package litvin.tests;
+package tests;
 
 import litvin.dao.issue.IssueDao;
 import litvin.dao.issue.IssueDaoHibernate;
