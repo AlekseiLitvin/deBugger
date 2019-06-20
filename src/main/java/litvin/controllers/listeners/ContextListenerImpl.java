@@ -10,7 +10,6 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
-import java.util.Set;
 
 @WebListener
 public class ContextListenerImpl implements ServletContextListener {
@@ -25,7 +24,7 @@ public class ContextListenerImpl implements ServletContextListener {
 
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         Driver d = null;
-        while(drivers.hasMoreElements()) {
+        while (drivers.hasMoreElements()) {
             try {
                 d = drivers.nextElement();
                 DriverManager.deregisterDriver(d);

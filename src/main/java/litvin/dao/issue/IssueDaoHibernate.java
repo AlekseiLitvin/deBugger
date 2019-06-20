@@ -1,14 +1,11 @@
 package litvin.dao.issue;
 
-import litvin.constants.Constants;
 import litvin.dao.GenericHibernateDao;
 import litvin.dao.config.HibernateUtil;
 import litvin.model.project.Issue;
 import litvin.model.user.User;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 

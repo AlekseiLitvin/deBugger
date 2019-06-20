@@ -31,8 +31,7 @@ public class DownloadAttachmentServlet extends HttpServlet {
 
         resp.setHeader("Content-disposition", "attachment; filename = img" + attachment.getId());
 
-        try
-        {
+        try {
             bis = new BufferedInputStream(new ByteArrayInputStream(attachment.getFile()));
             bos = new BufferedOutputStream(out);
 
@@ -41,9 +40,7 @@ public class DownloadAttachmentServlet extends HttpServlet {
                 bos.flush();
             }
             resp.sendRedirect(req.getHeader("referer"));
-        }
-        finally
-        {
+        } finally {
             if (bis != null)
                 bis.close();
             if (bos != null)

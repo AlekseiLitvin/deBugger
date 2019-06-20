@@ -3,11 +3,8 @@ package litvin.controllers.authorization;
 
 import litvin.constants.ConstAddress;
 import litvin.constants.Constants;
-import litvin.controllers.ServletUtil;
 import litvin.dao.issue.IssueDao;
 import litvin.dao.issue.IssueDaoHibernate;
-import litvin.dao.user.UserDao;
-import litvin.dao.user.UserDaoHibernate;
 import litvin.model.project.Issue;
 import litvin.model.user.Role;
 import litvin.model.user.User;
@@ -26,7 +23,7 @@ import java.util.List;
 
 
 @WebServlet(urlPatterns = "/main", name = "main")
-public class MainPageServlet extends HttpServlet{
+public class MainPageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,16 +33,16 @@ public class MainPageServlet extends HttpServlet{
 
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(Constants.USER);
-        if (user == null){
+        if (user == null) {
             user = new User();
             user.setRole(Role.GUEST.name());
             session.setAttribute(Constants.USER, user);
         }
 
         String userRole = user.getRole();
-        if (userRole.equals(Role.GUEST.name())){
+        if (userRole.equals(Role.GUEST.name())) {
             issuesList = issueDao.getAllIssues();
-        }else if (userRole.equals(Role.USER.name()) || userRole.equals(Role.ADMIN.name())){
+        } else if (userRole.equals(Role.USER.name()) || userRole.equals(Role.ADMIN.name())) {
             issuesList = issueDao.getIssuesBuUser(user);
         }
         Collections.reverse(issuesList);

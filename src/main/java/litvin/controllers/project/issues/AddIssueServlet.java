@@ -20,7 +20,6 @@ import litvin.model.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,12 +38,12 @@ public class AddIssueServlet extends AbstractServlet {
         String assigneeEmail = req.getParameter(Constants.ASSIGNEE_EMAIL);
         String modifierEmail = req.getParameter(Constants.MODIFIER_EMAIL);
 
-        if (isEmptyOrNull(summary, description, status, type, priority, projectId, assigneeEmail)){
+        if (isEmptyOrNull(summary, description, status, type, priority, projectId, assigneeEmail)) {
             jumpError(ConstError.EMPTY_LINE, ConstAddress.ISSUE_PAGE_INIT_SERVLET, req, resp);
             return;
         }
         String validationResult = validate(status, assigneeEmail);
-        if (!validationResult.equals(ConstError.OK)){
+        if (!validationResult.equals(ConstError.OK)) {
             jumpError(validationResult, ConstAddress.ISSUE_PAGE_INIT_SERVLET, req, resp);
             return;
         }
@@ -57,7 +56,7 @@ public class AddIssueServlet extends AbstractServlet {
 
             int projectIdDigit = Integer.parseInt(projectId);
             Project project = projectDao.findProjectById(projectIdDigit);
-            User assignee = assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)? null: userDao.getUser(assigneeEmail);
+            User assignee = assigneeEmail.equals(Constants.USER_NOT_ASSIGNED) ? null : userDao.getUser(assigneeEmail);
             User modifier = userDao.getUser(modifierEmail);
 
             Issue issue = new Issue();
@@ -79,21 +78,21 @@ public class AddIssueServlet extends AbstractServlet {
             HttpSession session = req.getSession();
             session.setAttribute(Notifications.SUCCESS_MESSAGE, Notifications.ISSUE_ADDED);
             resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);
-        }catch (DaoException e){
+        } catch (DaoException e) {
             e.printStackTrace();
             jumpError(ConstError.DAO_ERROR, ConstAddress.ISSUE_PAGE_INIT_SERVLET, req, resp);
         }
     }
 
-    private String validate(String status, String assigneeEmail){
+    private String validate(String status, String assigneeEmail) {
         final int NEW_ISSUE_INDEX = 0;
         AttrDao attrDao = new AttrDaoFile();
         String[] statuses = attrDao.getAllAttributes(Constants.STATUSES_FILE);
 
-        if (status.equals(statuses[NEW_ISSUE_INDEX]) && !assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)){
+        if (status.equals(statuses[NEW_ISSUE_INDEX]) && !assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)) {
             return ConstError.NEW_STATUS_ERROR;
         }
-        if (!status.equals(statuses[NEW_ISSUE_INDEX]) && assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)){
+        if (!status.equals(statuses[NEW_ISSUE_INDEX]) && assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)) {
             return ConstError.ASSIGNED_STATUS_ERROR;
         }
         return ConstError.OK;

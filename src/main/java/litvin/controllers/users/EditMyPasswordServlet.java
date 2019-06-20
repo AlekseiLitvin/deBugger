@@ -12,7 +12,6 @@ import litvin.service.MD5Encoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,12 +25,12 @@ public class EditMyPasswordServlet extends AbstractServlet {
         String newPassword = req.getParameter(Constants.PASSWORD);
         String passwordCheck = req.getParameter(Constants.PASSWORD_CHECK);
 
-        if(isEmptyOrNull(newPassword, newPassword)){
+        if (isEmptyOrNull(newPassword, newPassword)) {
             jumpError(ConstError.EMPTY_LINE, ConstAddress.EDIT_MY_PASSWORD_PAGE, req, resp);
             return;
         }
 
-        if (!newPassword.equals(passwordCheck)){
+        if (!newPassword.equals(passwordCheck)) {
             jumpError(ConstError.PASSWORDS_ARE_NOT_EQUALS, ConstAddress.EDIT_MY_PASSWORD_PAGE, req, resp);
             return;
         }

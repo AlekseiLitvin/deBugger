@@ -25,18 +25,18 @@ public class LoginServlet extends AbstractServlet {
 
         UserDao userDao = new UserDaoHibernate();
         try {
-            if(isEmptyOrNull(email, password)){
+            if (isEmptyOrNull(email, password)) {
                 jumpError(ConstError.EMPTY_EMAIL_OR_PASSWORD, ConstAddress.LOGIN_PAGE, req, resp);
                 return;
             }
 
             User user = userDao.getUser(email);
             password = MD5Encoder.getEncodedString(password);
-            if(user == null || !userDao.checkPassword(email, password)){
+            if (user == null || !userDao.checkPassword(email, password)) {
                 jumpError(ConstError.WRONG_EMAIL_OR_PASSWORD, ConstAddress.LOGIN_PAGE, req, resp);
                 return;
             }
-            if (LoggedUsers.usersSet.contains(user)){
+            if (LoggedUsers.usersSet.contains(user)) {
                 jumpError(ConstError.USER_ALREADY_LOGGED, ConstAddress.LOGIN_PAGE, req, resp);
                 return;
             }
@@ -45,7 +45,7 @@ public class LoginServlet extends AbstractServlet {
             session.setAttribute(Constants.USER, user);
 
             resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);
-        }catch (DaoException e){
+        } catch (DaoException e) {
             jumpError(ConstError.DAO_ERROR, ConstAddress.LOGIN_PAGE, req, resp);
         }
     }

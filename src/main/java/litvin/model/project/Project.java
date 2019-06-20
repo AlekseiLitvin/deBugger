@@ -33,7 +33,6 @@ public class Project {
     private Set<Issue> issues = new HashSet<>();
 
 
-
     public int getId() {
         return id;
     }

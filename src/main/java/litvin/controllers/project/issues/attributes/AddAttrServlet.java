@@ -1,7 +1,6 @@
 package litvin.controllers.project.issues.attributes;
 
 import litvin.constants.ConstAddress;
-import litvin.constants.ConstError;
 import litvin.controllers.AbstractServlet;
 import litvin.controllers.ServletUtil;
 import litvin.dao.issue.attributes.AttrDao;
@@ -23,9 +22,9 @@ public class AddAttrServlet extends AbstractServlet {
         String newAttribute = req.getParameter(NEW_ATTRIBUTE_NAME);
 
         AttrDao attrDao = new AttrDaoFile();
-        if (oldAttribute != null && !oldAttribute.isEmpty()){
+        if (oldAttribute != null && !oldAttribute.isEmpty()) {
             attrDao.editAttribute(fileName, oldAttribute, newAttribute);
-        }else {
+        } else {
             attrDao.addAttribute(fileName, newAttribute);
         }
         resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);

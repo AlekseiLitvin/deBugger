@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "AddAttrInitServletServlet", urlPatterns ="/admin/addIssueAttr/*")
+@WebServlet(name = "AddAttrInitServletServlet", urlPatterns = "/admin/addIssueAttr/*")
 public class AddAttrInitServletServlet extends HttpServlet {
 
     @Override

@@ -1,7 +1,6 @@
 package litvin.controllers.project;
 
 import litvin.constants.ConstAddress;
-import litvin.constants.Constants;
 import litvin.dao.project.ProjectDao;
 import litvin.dao.project.ProjectDaoHibernate;
 import litvin.model.project.Project;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 @WebServlet(name = "AllProjectsPageServlet", urlPatterns = "/admin/allProjects")

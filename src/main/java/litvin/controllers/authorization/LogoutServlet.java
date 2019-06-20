@@ -1,7 +1,6 @@
 package litvin.controllers.authorization;
 
 import litvin.constants.ConstAddress;
-import litvin.controllers.AbstractServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

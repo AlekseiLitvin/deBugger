@@ -5,7 +5,10 @@ import litvin.constants.Constants;
 import litvin.model.user.Role;
 import litvin.model.user.User;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +24,10 @@ public class AdminFilter extends AbstractFilter {
 
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(Constants.USER);
-        if (!user.getRole().equals(Role.ADMIN.name())){
+        if (!user.getRole().equals(Role.ADMIN.name())) {
             HttpServletResponse resp = (HttpServletResponse) response;
             resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);
-        }else {
+        } else {
             chain.doFilter(request, response);
         }
     }

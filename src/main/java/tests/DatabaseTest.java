@@ -12,17 +12,17 @@ import org.junit.Test;
 public class DatabaseTest {
 
     @Test
-    public void getUserTest(){
+    public void getUserTest() {
         final String EMAIL = "litvin@mail.ru";
         UserDao userDao = new UserDaoHibernate();
         User actualUser = userDao.getUser(EMAIL);
-        if (actualUser != null){
+        if (actualUser != null) {
             Assert.assertEquals(EMAIL, actualUser.getEmail());
         }
     }
 
     @Test
-    public void entitiesNumberTest(){
+    public void entitiesNumberTest() {
         IssueDao issueDao = new IssueDaoHibernate();
         int size = issueDao.getAllIssues().size();
         int entitiesNumber = issueDao.getEntitiesNumber().intValue();
@@ -30,7 +30,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void getIssueByIdTest(){
+    public void getIssueByIdTest() {
         final int ID = 2;
         IssueDao issueDao = new IssueDaoHibernate();
         Issue issue = issueDao.findIssueById(ID);

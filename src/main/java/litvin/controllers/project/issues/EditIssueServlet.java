@@ -53,12 +53,12 @@ public class EditIssueServlet extends AbstractServlet {
         String modifierEmail = req.getParameter(Constants.MODIFIER_EMAIL);
         String commentText = req.getParameter(Constants.ISSUE_COMMENT);
 
-        if (isEmptyOrNull(summary, description, status, type, priority, priority, projectId, assigneeEmail, modifierEmail)){
+        if (isEmptyOrNull(summary, description, status, type, priority, priority, projectId, assigneeEmail, modifierEmail)) {
             jumpError(ConstError.EMPTY_LINE, ConstAddress.EDIT_ISSUE_SERVLET + id, req, resp);
             return;
         }
         String validationResult = validate(resolution, status, assigneeEmail);
-        if (!validationResult.equals(ConstError.OK)){
+        if (!validationResult.equals(ConstError.OK)) {
             jumpError(validationResult, ConstAddress.EDIT_ISSUE_SERVLET + id, req, resp);
             return;
         }
@@ -71,7 +71,7 @@ public class EditIssueServlet extends AbstractServlet {
 
         Issue issue = issueDao.findIssueById(Integer.parseInt(id));
         Project project = projectDao.findProjectById(Integer.parseInt(projectId));
-        User assignee = assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)? null: userDao.getUser(assigneeEmail);
+        User assignee = assigneeEmail.equals(Constants.USER_NOT_ASSIGNED) ? null : userDao.getUser(assigneeEmail);
         User modifier = userDao.getUser(modifierEmail);
 
         issue.setSummary(summary);
@@ -84,7 +84,7 @@ public class EditIssueServlet extends AbstractServlet {
         issue.setAssignee(assignee);
         issue.setModifier(modifier);
 
-        if (commentText != null && !commentText.isEmpty()){
+        if (commentText != null && !commentText.isEmpty()) {
             Comment comment = new Comment();
             comment.setUser(modifier);
             comment.setDate(new Date());
@@ -94,7 +94,7 @@ public class EditIssueServlet extends AbstractServlet {
             issue.getComments().add(comment);
         }
 
-        if (part.getSize() != 0){
+        if (part.getSize() != 0) {
             InputStream inputStream = part.getInputStream();
             byte[] attachmentBytes = new byte[(int) part.getSize()];
             inputStream.read(attachmentBytes);
@@ -116,20 +116,20 @@ public class EditIssueServlet extends AbstractServlet {
         resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);
     }
 
-    private String validate(String resolution, String status, String assigneeEmail){
+    private String validate(String resolution, String status, String assigneeEmail) {
         final int NEW_ISSUE_INDEX = 0, RESOLVED_INDEX = 3, CLOSED_INDEX = 4;
         AttrDao attrDao = new AttrDaoFile();
         String[] statuses = attrDao.getAllAttributes(Constants.STATUSES_FILE);
 
-        if (resolution != null){
-            if (!status.equals(statuses[RESOLVED_INDEX]) && !status.equals(statuses[CLOSED_INDEX])){
+        if (resolution != null) {
+            if (!status.equals(statuses[RESOLVED_INDEX]) && !status.equals(statuses[CLOSED_INDEX])) {
                 return ConstError.RESOLUTION_ERROR;
             }
         }
-        if (status.equals(statuses[NEW_ISSUE_INDEX]) && !assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)){
+        if (status.equals(statuses[NEW_ISSUE_INDEX]) && !assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)) {
             return ConstError.NEW_STATUS_ERROR;
         }
-        if (!status.equals(statuses[NEW_ISSUE_INDEX]) && assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)){
+        if (!status.equals(statuses[NEW_ISSUE_INDEX]) && assigneeEmail.equals(Constants.USER_NOT_ASSIGNED)) {
             return ConstError.ASSIGNED_STATUS_ERROR;
         }
         return ConstError.OK;

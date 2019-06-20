@@ -22,12 +22,12 @@ public class AbstractServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        jumpError(ConstError.METHOD_GET_ERROR , ConstAddress.MAIN_PAGE_SERVLET, req, resp);
+        jumpError(ConstError.METHOD_GET_ERROR, ConstAddress.MAIN_PAGE_SERVLET, req, resp);
     }
 
-    protected boolean isEmptyOrNull(String ... args){
-        for (String s : args){
-            if (s == null || s.isEmpty() || s.trim().isEmpty()){
+    protected boolean isEmptyOrNull(String... args) {
+        for (String s : args) {
+            if (s == null || s.isEmpty() || s.trim().isEmpty()) {
                 return true;
             }
         }

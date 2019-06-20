@@ -3,7 +3,7 @@ package litvin.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 public class ServletUtil {
-    public static String getPathVariable(HttpServletRequest req){
+    public static String getPathVariable(HttpServletRequest req) {
         final String DELIMITER = "/";
         final int PATH_VARIABLE_INDEX = 1;
         String path = req.getPathInfo();

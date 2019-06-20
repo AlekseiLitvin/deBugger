@@ -1,7 +1,7 @@
 package litvin.constants;
 
 public class Constants {
-    public static final String ID = "id" ,EMAIL = "email", PASSWORD = "password", PASSWORD_CHECK = "passwordCheck";
+    public static final String ID = "id", EMAIL = "email", PASSWORD = "password", PASSWORD_CHECK = "passwordCheck";
     public static final String FIRST_NAME = "firstName", LAST_NAME = "lastName", OLD_EMAIL = "oldEmail";
 
     public static final String USER = "user", ROLE = "role";

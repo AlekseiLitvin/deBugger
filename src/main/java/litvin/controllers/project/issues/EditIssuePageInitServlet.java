@@ -52,7 +52,7 @@ public class EditIssuePageInitServlet extends HttpServlet {
         req.setAttribute(Constants.PRIORITIES_FILE, priorities);
         req.setAttribute(Constants.STATUSES_FILE, statuses);
         req.setAttribute(PROJECTS_LIST, projectsList);
-        req.setAttribute(ISSUE ,issue);
+        req.setAttribute(ISSUE, issue);
         RequestDispatcher dispatcher = req.getRequestDispatcher(ConstAddress.EDIT_ISSUE_PAGE);
         dispatcher.forward(req, resp);
     }

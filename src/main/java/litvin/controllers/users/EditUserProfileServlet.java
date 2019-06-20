@@ -11,7 +11,6 @@ import litvin.model.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +27,7 @@ public class EditUserProfileServlet extends AbstractServlet {
         String role = req.getParameter(Constants.ROLE);
         String oldEmail = req.getParameter(Constants.OLD_EMAIL);
 
-        if (isEmptyOrNull(firstName, lastName, newEmail, role, oldEmail)){
+        if (isEmptyOrNull(firstName, lastName, newEmail, role, oldEmail)) {
             jumpError(ConstError.EMPTY_LINE, ConstAddress.EDIT_USER_PROFILE_PAGE, req, resp);
             return;
         }

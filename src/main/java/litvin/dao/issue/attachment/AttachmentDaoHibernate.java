@@ -3,7 +3,7 @@ package litvin.dao.issue.attachment;
 import litvin.dao.GenericHibernateDao;
 import litvin.model.project.Attachment;
 
-public class AttachmentDaoHibernate extends GenericHibernateDao<Attachment> implements AttachmentDao{
+public class AttachmentDaoHibernate extends GenericHibernateDao<Attachment> implements AttachmentDao {
     @Override
     public void saveAttachment(Attachment attachment) {
         saveEntity(attachment);

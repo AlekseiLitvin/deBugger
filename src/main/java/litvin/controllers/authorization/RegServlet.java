@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "RegServlet", urlPatterns ="/admin/registration")
+@WebServlet(name = "RegServlet", urlPatterns = "/admin/registration")
 public class RegServlet extends AbstractServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstName = req.getParameter(Constants.FIRST_NAME);
@@ -30,7 +30,7 @@ public class RegServlet extends AbstractServlet {
         String passwordCheck = req.getParameter(Constants.PASSWORD_CHECK);
 
         String validationResult = validateData(firstName, lastName, email, role, password, passwordCheck);
-        if (!validationResult.equals(ConstError.OK)){
+        if (!validationResult.equals(ConstError.OK)) {
             jumpError(validationResult, ConstAddress.REG_PAGE, req, resp);
             return;
         }
@@ -38,31 +38,31 @@ public class RegServlet extends AbstractServlet {
         password = MD5Encoder.getEncodedString(password);
         UserDao userDao = new UserDaoHibernate();
         try {
-            if (userDao.saveUser(firstName, lastName, email, role, password)){
+            if (userDao.saveUser(firstName, lastName, email, role, password)) {
                 HttpSession session = req.getSession();
                 session.setAttribute(Notifications.SUCCESS_MESSAGE, Notifications.USER_REGISTERED);
                 resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);
-            }else {
+            } else {
                 jumpError(ConstError.EMAIL_ALREADY_TAKEN, ConstAddress.REG_PAGE, req, resp);
             }
-        }catch (DaoException e){
+        } catch (DaoException e) {
             System.err.println(e.getMessage());
             jumpError(ConstError.DAO_ERROR, ConstAddress.REG_PAGE, req, resp);
         }
     }
 
     private String validateData(String firstName, String lastName, String email, String role,
-                                String password, String passwordCheck){
-        if (isEmptyOrNull(firstName, lastName, email, role, password, passwordCheck)){
+                                String password, String passwordCheck) {
+        if (isEmptyOrNull(firstName, lastName, email, role, password, passwordCheck)) {
             return ConstError.EMPTY_LINE;
         }
-        if (!password.equals(passwordCheck)){
+        if (!password.equals(passwordCheck)) {
             return ConstError.PASSWORDS_ARE_NOT_EQUALS;
         }
-        if(!Role.USER.name().equals(role) && !Role.ADMIN.name().equals(role)){
+        if (!Role.USER.name().equals(role) && !Role.ADMIN.name().equals(role)) {
             return ConstError.ROLE_ERROR;
         }
-        if (!RegexValidation.validateEmail(email) || !RegexValidation.validatePassword(password)){
+        if (!RegexValidation.validateEmail(email) || !RegexValidation.validatePassword(password)) {
             return ConstError.PATTERN_ERROR;
         }
         return ConstError.OK;

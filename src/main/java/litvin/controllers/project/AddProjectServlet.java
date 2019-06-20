@@ -30,20 +30,20 @@ public class AddProjectServlet extends AbstractServlet {
         String build = req.getParameter(Constants.PROJECT_BUILD);
         String managerEmail = req.getParameter(Constants.PROJECT_MANAGER_EMAIL);
 
-        if (isEmptyOrNull(name, description, build, managerEmail)){
+        if (isEmptyOrNull(name, description, build, managerEmail)) {
             jumpError(ConstError.EMPTY_EMAIL_OR_PASSWORD, ConstAddress.PROJECT_PAGE_INIT_SERVLET, req, resp);
             return;
         }
         UserDao userDao = new UserDaoHibernate();
         try {
             User manager = userDao.getUser(managerEmail);
-            if (manager == null){
+            if (manager == null) {
                 jumpError(ConstError.WRONG_EMAIL, ConstAddress.PROJECT_PAGE_INIT_SERVLET, req, resp);
                 return;
             }
             ProjectDao projectDao = new ProjectDaoHibernate();
             HttpSession session = req.getSession();
-            if (projectId != null && !projectId.isEmpty()){
+            if (projectId != null && !projectId.isEmpty()) {
                 Project project = projectDao.findProjectById(Integer.parseInt(projectId));
                 project.setName(name);
                 project.setDescription(description);
@@ -52,7 +52,7 @@ public class AddProjectServlet extends AbstractServlet {
 
                 session.setAttribute(Notifications.SUCCESS_MESSAGE, Notifications.PROJECT_EDITED);
                 projectDao.updateProject(project);
-            }else {
+            } else {
                 Project project = new Project();
                 project.setName(name);
                 project.setDescription(description);
@@ -64,7 +64,7 @@ public class AddProjectServlet extends AbstractServlet {
             }
 
             resp.sendRedirect(ConstAddress.MAIN_PAGE_SERVLET);
-        }catch (DaoException e){
+        } catch (DaoException e) {
             jumpError(ConstError.DAO_ERROR, ConstAddress.PROJECT_PAGE_INIT_SERVLET, req, resp);
         }
     }

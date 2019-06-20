@@ -26,7 +26,7 @@ public class Issue {
     private String status;
 
     @Column(name = "type")
-    private String  type;
+    private String type;
 
     @Column(name = "priority")
     private String priority;
@@ -66,8 +66,6 @@ public class Issue {
 
     @OneToMany(mappedBy = "issue", fetch = FetchType.EAGER)
     private Set<Attachment> attachments = new HashSet<>();
-
-
 
 
     public int getId() {

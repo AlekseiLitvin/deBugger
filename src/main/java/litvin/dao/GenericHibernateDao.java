@@ -3,7 +3,6 @@ package litvin.dao;
 import litvin.constants.Constants;
 import litvin.dao.config.HibernateUtil;
 import litvin.exceptions.DaoException;
-import litvin.model.user.User;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,7 +12,6 @@ import org.hibernate.criterion.Restrictions;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 public abstract class GenericHibernateDao<T> implements GenericDao<T> {
 
@@ -37,12 +35,12 @@ public abstract class GenericHibernateDao<T> implements GenericDao<T> {
             tr = session.beginTransaction();
             session.save(entity);
             tr.commit();
-        }catch (Exception e){
+        } catch (Exception e) {
             if (tr != null) {
                 tr.rollback();
             }
             throw new DaoException(e);
-        }finally {
+        } finally {
             session.close();
         }
     }
@@ -56,7 +54,7 @@ public abstract class GenericHibernateDao<T> implements GenericDao<T> {
             Criteria criteria = session.createCriteria(getPersistentClass());
             criteria.add(Restrictions.eq(Constants.ID, id));
             return (T) criteria.uniqueResult();
-        }finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
@@ -69,16 +67,16 @@ public abstract class GenericHibernateDao<T> implements GenericDao<T> {
         Transaction tr = null;
         try {
             tr = session.beginTransaction();
-            synchronized (GenericHibernateDao.class){
+            synchronized (GenericHibernateDao.class) {
                 session.update(entity);
                 tr.commit();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             if (tr != null) {
                 tr.rollback();
             }
             throw new DaoException(e);
-        }finally {
+        } finally {
             session.close();
         }
     }
@@ -90,7 +88,6 @@ public abstract class GenericHibernateDao<T> implements GenericDao<T> {
         Query query = session.createSQLQuery("SELECT * FROM " + source).addEntity(getPersistentClass());
         return query.list();
     }
-
 
 
     @Override

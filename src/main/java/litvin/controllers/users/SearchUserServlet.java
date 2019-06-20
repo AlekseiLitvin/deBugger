@@ -10,7 +10,6 @@ import litvin.model.user.User;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class SearchUserServlet extends AbstractServlet {
 
             UserDao userDao = new UserDaoHibernate();
             usersList = userDao.findByName(firstName, lastName);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             usersList = new ArrayList<>();
         }
 

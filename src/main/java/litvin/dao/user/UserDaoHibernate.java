@@ -4,12 +4,10 @@ import litvin.constants.Constants;
 import litvin.dao.GenericHibernateDao;
 import litvin.dao.config.HibernateUtil;
 import litvin.exceptions.DaoException;
-import litvin.model.project.Issue;
 import litvin.model.user.User;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class UserDaoHibernate extends GenericHibernateDao<User> implements UserDao {
@@ -22,7 +20,7 @@ public class UserDaoHibernate extends GenericHibernateDao<User> implements UserD
             Criteria criteria = session.createCriteria(User.class);
             criteria.add(Restrictions.eq(Constants.EMAIL, email));
             return (User) criteria.uniqueResult();
-        }finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
@@ -36,8 +34,8 @@ public class UserDaoHibernate extends GenericHibernateDao<User> implements UserD
         Session session = HibernateUtil.getSession();
         Transaction tr = null;
         try {
-            synchronized (UserDaoHibernate.class){
-                if (getUser(email) == null){
+            synchronized (UserDaoHibernate.class) {
+                if (getUser(email) == null) {
                     tr = session.beginTransaction();
                     session.save(new User(firstName, lastName, email, role));
                     SQLQuery query = session.createSQLQuery(UPDATE_PASSWORD_QUERY);
@@ -46,16 +44,16 @@ public class UserDaoHibernate extends GenericHibernateDao<User> implements UserD
                     query.executeUpdate();
                     tr.commit();
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             if (tr != null) {
                 tr.rollback();
             }
             throw new DaoException(e);
-        }finally {
+        } finally {
             session.close();
         }
     }
@@ -71,7 +69,7 @@ public class UserDaoHibernate extends GenericHibernateDao<User> implements UserD
             query.setString(EMAIL_INDEX, email);
             String userPassword = (String) query.uniqueResult();
             return password.equals(userPassword);
-        }finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
@@ -101,7 +99,7 @@ public class UserDaoHibernate extends GenericHibernateDao<User> implements UserD
             query.setString(FIRST_NAME_INDEX, firstName);
             query.setString(LAST_NAME_INDEX, lastName);
             return query.list();
-        }finally {
+        } finally {
             if (session != null) {
                 session.close();
             }
@@ -115,20 +113,20 @@ public class UserDaoHibernate extends GenericHibernateDao<User> implements UserD
         Session session = HibernateUtil.getSession();
         Transaction tr = null;
         try {
-            synchronized (UserDaoHibernate.class){
-                    tr = session.beginTransaction();
-                    SQLQuery query = session.createSQLQuery(UPDATE_PASSWORD_QUERY);
-                    query.setString(PASSWORD_INDEX, newPassword);
-                    query.setString(EMAIL_INDEX, user.getEmail());
-                    query.executeUpdate();
-                    tr.commit();
+            synchronized (UserDaoHibernate.class) {
+                tr = session.beginTransaction();
+                SQLQuery query = session.createSQLQuery(UPDATE_PASSWORD_QUERY);
+                query.setString(PASSWORD_INDEX, newPassword);
+                query.setString(EMAIL_INDEX, user.getEmail());
+                query.executeUpdate();
+                tr.commit();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             if (tr != null) {
                 tr.rollback();
             }
             throw new DaoException(e);
-        }finally {
+        } finally {
             session.close();
         }
     }

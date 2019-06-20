@@ -1,10 +1,7 @@
 package litvin.controllers.project.issues.attributes;
 
 import litvin.constants.ConstAddress;
-import litvin.constants.Constants;
 import litvin.controllers.ServletUtil;
-import litvin.dao.issue.attributes.AttrDao;
-import litvin.dao.issue.attributes.AttrDaoFile;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
